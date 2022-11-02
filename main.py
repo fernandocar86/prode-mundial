@@ -1,4 +1,6 @@
-import pandas
+import pandas as pd
+from os import listdir
+
 
 def definir_puntajes():
     print('Si querés usar los puntajes estándar, ingresá s; si querés ingresar tus propios puntajes ingresa n')
@@ -23,10 +25,24 @@ def definir_puntajes():
         print('esa no es una respuesta correcta')
         definir_puntajes()
 
+def cargar_resultados():
+    print('Indicá en qué carpeta están alojados los resultados')
+    ruta = input()
+    resultados = cargar_datos(ruta)
+    for file in resultados:
+        ruta_entera = ruta + file
+        data = pd.read_csv(ruta_entera)
+        print(data)
+    
+    
+def cargar_datos(path):
+    filenames = listdir(path)
+    return [ filename for filename in filenames if filename.endswith( ".csv" ) ]
 
 def armar_puntajes(exacto, gpe, goles):
     print('si se le pega a los goles de ambos equipos en un partido son ' + str(exacto) + ' puntos')
     print('si se le pega quién gana o si hay empate en un partido? son ' + str(gpe) + ' puntos')
     print('Si se le pega a los goles de uno de los equipos son '+str(goles)+ ' puntos')
 
-definir_puntajes()
+#definir_puntajes()
+cargar_resultados()
