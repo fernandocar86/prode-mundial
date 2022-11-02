@@ -4,6 +4,7 @@ from os import listdir
 def iniciar():
     definir_puntajes()
     cargar_resultados()
+    cargar_estimaciones()
 
 def definir_puntajes():
     print('Si querés usar los puntajes estándar, ingresá s; si querés ingresar tus propios puntajes ingresa n')
@@ -36,18 +37,19 @@ def armar_puntajes(exacto, gpe, goles):
 def cargar_resultados():
     print('Indicá en qué carpeta están alojados los resultados')
     ruta = input()
+    mensaje_resultados = 'resultados anotados'
     resultados = cargar_datos(ruta)
     for file in resultados:
         ruta_entera = ruta + file
         data = pd.read_csv(ruta_entera)
         df = pd.DataFrame(data)
-        cargar_partidos(df)
+        cargar_partidos(df, mensaje_resultados)
 
 def cargar_datos(path):
     filenames = listdir(path)
     return [ filename for filename in filenames if filename.endswith( ".csv" ) ]
 
-def cargar_partidos(df):
+def cargar_partidos(df, mensaje):
     lista_partidos = []
     dict_partidos = []
     for index, row in df.iterrows():
@@ -56,13 +58,22 @@ def cargar_partidos(df):
             lista_partidos.append(part)
             valores_partido = [part, int(row[3]), int(row[4])]
             dict_partidos.append(valores_partido)
-    print('los partidos para los que hay resultados anotados son los siguientes:')
+    print('los partidos para los que hay '+mensaje+' son los siguientes:')
     for item in lista_partidos:
         print(item)
     print(dict_partidos)        
         
+def cargar_estimaciones():
+    print('Indicá en qué carpeta están alojadas las estimaciones de los participantes')
+    ruta2 = input()
+    estimaciones = cargar_datos(ruta2)
+    mensaje_estimaciones = 'estimaciones anotadas'
+    for file in estimaciones:
+        ruta_entera2 = ruta2 + file
+        data2 = pd.read_csv(ruta_entera2)
+        df2 = pd.DataFrame(data2)
+        cargar_partidos(df2, mensaje_estimaciones)
 
-
-
+iniciar()
 #definir_puntajes()
-cargar_resultados()
+#cargar_resultados()
