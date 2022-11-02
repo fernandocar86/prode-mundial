@@ -56,12 +56,14 @@ def cargar_resultados(puntajes):
     mensaje_resultados = 'resultados anotados'
     resultados = cargar_datos(ruta)
     for file in resultados:
+        print('qué peso tiene los resultados en '+' '.join(re.sub(".csv", "", file).split()) + ' en este prode')
+        peso = int(input()) 
         ruta_entera = ruta + file
         data = pd.read_csv(ruta_entera)
         df = pd.DataFrame(data)
         dict_resultados = []
         cargar_partidos(df, mensaje_resultados, dict_resultados)
-    cargar_estimaciones(dict_resultados, puntajes)
+    cargar_estimaciones(dict_resultados, puntajes, peso)
 
 def cargar_datos(path):
     filenames = listdir(path)
@@ -81,27 +83,27 @@ def cargar_partidos(df, mensaje, dict_partidos):
     print(dict_partidos)
 #    return dict_partidos    
 
-def comparar_result_estim(dict_resultados, dict_estimaciones, file, puntajes):
+def comparar_result_estim(dict_resultados, dict_estimaciones, file, puntajes, peso):
     puntaje = 0
     for item1 in dict_resultados:
         for item2 in dict_estimaciones:
                 if item1[0] == item2[0] and item1[1] == item2[1] and item1[2] == item2[2]:
-                    puntaje = puntaje + exacto
+                    puntaje = puntaje + exacto * peso
                 elif item1[0] == item2[0] and item1[1] == item2[1]:
-                    puntaje = puntaje + goles
+                    puntaje = puntaje + goles * peso
                 elif item1[0] == item2[0] and item1[2] == item2[2]:
-                    puntaje = puntaje + goles
+                    puntaje = puntaje + goles * peso
                 elif item1[0] == item2[0] and item1[1] == item1[2] and item2[1] == item2[2]:
-                    puntaje = puntaje + gpe
+                    puntaje = puntaje + gpe * peso
                 elif item1[0] == item2[0] and item1[1] > item1[2] and item2[1] > item2[2]:
-                    puntaje = puntaje + gpe
+                    puntaje = puntaje + gpe * peso
                 elif item1[0] == item2[0] and item1[1] < item1[2] and item2[1] < item2[2]:
-                    puntaje = puntaje + gpe
+                    puntaje = puntaje + gpe * peso
     print(puntaje)
     nombre = ' '.join(re.sub(".csv", "", file).split())
     puntajes.write(nombre+','+str(puntaje)+'\n')                 
         
-def cargar_estimaciones(dict_resultados, puntajes):
+def cargar_estimaciones(dict_resultados, puntajes, peso):
     print('Las estimaciones de quienes participan de este prode se van a buscar en la carpeta estimaciones-participantes/. Si estás de acuerdo escribí s. Si no, escribí n.') 
     respuesta4 = input()
     if respuesta4 == 's':
@@ -119,7 +121,7 @@ def cargar_estimaciones(dict_resultados, puntajes):
         df2 = pd.DataFrame(data2)
         dict_estimaciones = []
         cargar_partidos(df2, mensaje_estimaciones, dict_estimaciones)
-        comparar_result_estim(dict_resultados, dict_estimaciones, file, puntajes)
+        comparar_result_estim(dict_resultados, dict_estimaciones, file, puntajes, peso)
 
 
 
