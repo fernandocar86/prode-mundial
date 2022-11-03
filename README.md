@@ -1,13 +1,12 @@
 # Prode para mundial
 
-Código para prode mundialista de uso casero. 
+Código para prode mundialista de uso casero. Este código todavía está en elaboración y, por el momento, no está totalmente funcional.
 
 # Funcionamiento
 
 Correr el archivo main.py desde la terminal:
 
-```python main.py
-```
+```python main.py ```
 
 Un cuadro de diálogo va a pedir confirmar si se van a usar los puntajes estándar o si se prefiere personalizarlos. 
 
