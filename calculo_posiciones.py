@@ -144,7 +144,7 @@ def cargar_estimaciones(dict_resultados, peso, fase):
 
 def reunir_puntajes():
     puntajes = open('puntajes.csv', "w", encoding='utf-8')
-    puntajes.write('Participante, Puntaje \n')
+    puntajes.write('Participante,Puntaje\n')
     ruta2 = 'aux/'
     planillas_part = cargar_datos(ruta2)
     for file in planillas_part:
