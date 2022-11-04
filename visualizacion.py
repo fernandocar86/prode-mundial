@@ -17,4 +17,4 @@ def armado_html(archivo):
     home.write('</body> \n </html>')
     home.close()
  
-armado_html('puntajes.csv')
+#armado_html('puntajes.csv')
