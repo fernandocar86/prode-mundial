@@ -14,7 +14,9 @@ def armado_html(archivo):
         home.write('<tr>\n<th>'+str(row[0])+'</th>\n<th>'+str(row[1])+'</th>\n</tr>')
     home.write('</table>\n')
 #    print(df2)
+    puntaje_ganador = df2.iloc[0,1]
+    home.write('<p>Ganó el prode nada más ni nada menos que '+str(df2.iloc[0,0])+' con '+str(puntaje_ganador)+' puntos</p>\n')
     home.write('</body> \n </html>')
     home.close()
  
-#armado_html('puntajes.csv')
+armado_html('puntajes.csv')
