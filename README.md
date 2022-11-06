@@ -29,7 +29,9 @@ Recordar que si esto se usa para el mundial de 2022, la cantidad de partidos por
 | Fase eliminatorias | 48 |
 | Octavos de final | 8
 | Cuartos de final | 4 |
-| final y semifinal | 2 |
+| Semifinales | 2 |
+| 3er lugar | 1 |
+| final | 1 |
 
 Dependiendo del peso que se le dé a cada fase, se obtendrán puntajes máximos diferentes.
 
