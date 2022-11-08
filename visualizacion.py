@@ -33,6 +33,12 @@ def armado_html(archivo):
                 ganadores = ganadores+str(item)
         ganadores = ganadores+' y '+str(sufijo)
         home.write('<p>Ganaron el prode nada más ni nada menos que '+ganadores+' con '+str(puntaje_ganador)+' puntos</p>\n') 
+    data2 = pd.read_csv('rondasypesos.csv', header=None)
+    df3 = pd.DataFrame(data2)
+    home.write('<p>Los puntos que se usaron para calcular estos puntajes fueron los siguientes</p>\n<table>\n')
+    for index, row in df3.iterrows():
+        home.write('<tr>\n<th>'+str(row[0])+'</th>\n<th>'+str(row[1])+'</th>\n<th>'+str(row[2])+'</th>\n<th>'+str(row[3])+'</th>\n<th>'+str(row[4])+'</th>\n</tr>')
+    home.write('</table>\n')
     home.write('</body> \n </html>')
     home.close()
  

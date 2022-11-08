@@ -68,17 +68,21 @@ def cargar_resultados():
         print('La respuesta no es adecuada') 
     mensaje_resultados = 'resultados anotados'
     resultados = cargar_datos(ruta)
+    rondas_y_pesos = open('rondasypesos.csv', "w", encoding='utf-8')
+    rondas_y_pesos.write('Ronda,Resultado exacto,orientación del resultado + goles de un equipo,Orientación del resultado,Goles de un equipo\n')
     for file in resultados:
         print('qué peso tiene los resultados en '+' '.join(re.sub(".csv", "", file).split()) + ' en este prode')
         peso = int(input()) 
         fase = file
+        rondas_y_pesos.write(''.join(re.sub(".csv", "", file).split()) + ','+str(peso * exacto) + ',' + str(peso * (gpe+goles)) + ',' + str(peso*gpe)+','+str(peso*goles)+'\n')
         ruta_entera = ruta + file
         data = pd.read_csv(ruta_entera)
         df = pd.DataFrame(data)
         dict_resultados = []
         cargar_partidos(df, mensaje_resultados, dict_resultados)
         cargar_estimaciones(dict_resultados, peso, fase)
-
+    rondas_y_pesos.close()
+    
 def cargar_datos(path):
     filenames = listdir(path)
     return [ filename for filename in filenames if filename.endswith( ".csv" ) ]
