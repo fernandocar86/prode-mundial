@@ -67,7 +67,7 @@ def cargar_resultados():
     else:
         print('La respuesta no es adecuada') 
     mensaje_resultados = 'resultados anotados'
-    resultados = cargar_datos(ruta)
+    resultados = cargar_datos(ruta, '.csv')
     rondas_y_pesos = open('rondasypesos.csv', "w", encoding='utf-8')
     rondas_y_pesos.write('Ronda,Resultado exacto,orientación del resultado + goles de un equipo,Orientación del resultado,Goles de un equipo\n')
     for file in resultados:
@@ -83,9 +83,9 @@ def cargar_resultados():
         cargar_estimaciones(dict_resultados, peso, fase)
     rondas_y_pesos.close()
     
-def cargar_datos(path):
+def cargar_datos(path, extension):
     filenames = listdir(path)
-    return [ filename for filename in filenames if filename.endswith( ".csv" ) ]
+    return [ filename for filename in filenames if filename.endswith( extension ) ]
 
 def cargar_partidos(df, mensaje, dict_partidos):
     lista_partidos = []
@@ -133,14 +133,14 @@ def cargar_estimaciones(dict_resultados, peso, fase):
         ruta2 = input()
     else:
         print('La respuesta no es adecuada') 
-    estimaciones = cargar_datos(ruta2)
+    estimaciones = cargar_datos(ruta2, '.xlsx')
     mensaje_estimaciones = 'estimaciones anotadas'
     for file in estimaciones:
-        nombre_part = ' '.join(re.sub(".csv", "", file).split())
+        nombre_part = ' '.join(re.sub(".xlsx", "", file).split())
         nombre_est_indiv_fase = 'aux/'+nombre_part+'_puntajes.csv'
         est_indiv_fase = open(nombre_est_indiv_fase, "a", encoding='utf-8')
         ruta_entera2 = ruta2 + file
-        data2 = pd.read_csv(ruta_entera2)
+        data2 = pd.read_excel(ruta_entera2)
         df2 = pd.DataFrame(data2)
         dict_estimaciones = []
         cargar_partidos(df2, mensaje_estimaciones, dict_estimaciones)
@@ -150,7 +150,7 @@ def reunir_puntajes():
     puntajes = open('puntajes.csv', "w", encoding='utf-8')
     puntajes.write('Participante,Puntaje\n')
     ruta2 = 'aux/'
-    planillas_part = cargar_datos(ruta2)
+    planillas_part = cargar_datos(ruta2, '.csv')
     for file in planillas_part:
         ruta_entera2 = ruta2 + file
         nombre_part = ' '.join(re.sub("_puntajes.csv", "", file).split())
