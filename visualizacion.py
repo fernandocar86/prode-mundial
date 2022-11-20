@@ -13,12 +13,14 @@ def armado_html(archivo):
     for index, row in df2.iterrows():
         home.write('<tr>\n<th>'+str(row[0])+'</th>\n<th>'+str(row[1])+'</th>\n</tr>')
     home.write('</table>\n')
-#    print(df2)
     puntaje_ganador = df2.iloc[0,1]
     ganador = [str(df2.iloc[0,0])]
     for index, row in df2.iterrows():
-        if index != 0 and row[1] == df2.iloc[0,1]:
+        if index != 0 and df2.iloc[index,1] == df2.iloc[0,1]:
             ganador.append(str(df2.iloc[index,0]))
+        else:
+            ganador = ganador
+    print(ganador)
     if len(ganador) == 1:
         home.write('<p>Ganó el prode nada más ni nada menos que '+str(df2.iloc[0,0])+' con '+str(puntaje_ganador)+' puntos</p>\n')
     else:
@@ -42,4 +44,4 @@ def armado_html(archivo):
     home.write('</body> \n </html>')
     home.close()
  
-armado_html('puntajes.csv')
+#armado_html('puntajes.csv')
