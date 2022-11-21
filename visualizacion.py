@@ -20,7 +20,6 @@ def armado_html(archivo):
             ganador.append(str(df2.iloc[index,0]))
         else:
             ganador = ganador
-    print(ganador)
     if len(ganador) == 1:
         home.write('<p>Ganó el prode nada más ni nada menos que '+str(df2.iloc[0,0])+' con '+str(puntaje_ganador)+' puntos</p>\n')
     else:

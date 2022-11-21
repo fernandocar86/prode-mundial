@@ -105,21 +105,39 @@ def comparar_result_estim(dict_resultados, dict_estimaciones, file, est_indiv_fa
     puntaje = 0
     for item1 in dict_resultados:
         for item2 in dict_estimaciones:
-                if item1[0] == item2[0] and item1[1] == item2[1] and item1[2] == item2[2]:
-                    puntaje = puntaje + exacto * peso
-                elif item1[0] == item2[0] and item1[1] == item2[1]:
-                    puntaje = puntaje + goles * peso
-                elif item1[0] == item2[0] and item1[2] == item2[2]:
-                    puntaje = puntaje + goles * peso
-                elif item1[0] == item2[0] and item1[1] == item1[2] and item2[1] == item2[2]:
-                    puntaje = puntaje + gpe * peso
-                elif item1[0] == item2[0] and item1[1] > item1[2] and item2[1] > item2[2]:
-                    puntaje = puntaje + gpe * peso
-                elif item1[0] == item2[0] and item1[1] < item1[2] and item2[1] < item2[2]:
-                    puntaje = puntaje + gpe * peso
-                else:
-                    puntaje = puntaje
-    print(puntaje)
+            # gana sin goles
+            if item1[0] == item2[0] and int(item1[1]) > int(item1[2]) and int(item2[1]) > int(item2[2]) and item1[1] != item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + gpe * peso
+            # pierde sin goles
+            elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) < int(item2[2]) and item1[1] != item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + gpe * peso
+            # empata sin goles
+            elif item1[0] == item2[0] and item1[1] == item1[2] and item1[1] == item1[2] and item1[1] != item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + gpe * peso
+            # pierde con goles 1
+            elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) < int(item2[2]) and item1[1] == item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + gpe * peso + goles * peso 
+            # pierde con goles 2
+            elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) < int(item2[2]) and item1[1] != item2[1] and item1[2] == item2[2]:
+                puntaje = puntaje + gpe * peso + goles * peso
+            # gana con goles 1
+            elif item1[0] == item2[0] and int(item1[1]) > int(item1[2]) and int(item2[1]) > int(item2[2]) and item1[1] == item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + gpe * peso + goles * peso
+            # gana con goles 2
+            elif item1[0] == item2[0] and int(item1[1]) > int(item1[2]) and int(item2[1]) > int(item2[2]) and item1[1] != item2[1] and item1[2] == item2[2]:
+                puntaje = puntaje + gpe * peso + goles * peso
+            # resultado exacto
+            elif item1[0] == item2[0] and item1[1] == item2[1] and item1[2] == item2[2]:
+                puntaje = puntaje + exacto * peso
+            # goles 1
+            elif item1[0] == item2[0] and int(item1[1]) > int(item1[2]) and int(item2[1]) <= int(item2[2]) and item1[1] == item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + goles * peso
+            # goles 2
+            elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) >= int(item2[2]) and item1[2] == item2[2] and item1[1] != item2[1]:
+                puntaje = puntaje + goles * peso
+            else:
+                puntaje = puntaje
+#    print(puntaje)
     nombre = ' '.join(re.sub(".csv", "", file).split())
     est_indiv_fase.write(nombre+','+str(puntaje)+'\n')                 
         
