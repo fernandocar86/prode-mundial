@@ -112,7 +112,7 @@ def comparar_result_estim(dict_resultados, dict_estimaciones, file, est_indiv_fa
             elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) < int(item2[2]) and item1[1] != item2[1] and item1[2] != item2[2]:
                 puntaje = puntaje + gpe * peso
             # empata sin goles
-            elif item1[0] == item2[0] and item1[1] == item1[2] and item1[1] == item1[2] and item1[1] != item2[1] and item1[2] != item2[2]:
+            elif item1[0] == item2[0] and item1[1] == item1[2] and item2[1] == item2[2] and item1[1] != item2[1] and item1[2] != item2[2]:
                 puntaje = puntaje + gpe * peso
             # pierde con goles 1
             elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) < int(item2[2]) and item1[1] == item2[1] and item1[2] != item2[2]:
@@ -129,11 +129,17 @@ def comparar_result_estim(dict_resultados, dict_estimaciones, file, est_indiv_fa
             # resultado exacto
             elif item1[0] == item2[0] and item1[1] == item2[1] and item1[2] == item2[2]:
                 puntaje = puntaje + exacto * peso
-            # goles 1
+            # goles 1 (gana y dijo que pierde o empata)
             elif item1[0] == item2[0] and int(item1[1]) > int(item1[2]) and int(item2[1]) <= int(item2[2]) and item1[1] == item2[1] and item1[2] != item2[2]:
                 puntaje = puntaje + goles * peso
-            # goles 2
-            elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) >= int(item2[2]) and item1[2] == item2[2] and item1[1] != item2[1]:
+            # goles 2 (pierde y dijo que gana o empata)
+            elif item1[0] == item2[0] and int(item1[1]) < int(item1[2]) and int(item2[1]) >= int(item2[2]) and item1[1] != item2[1] and item1[2] == item2[2]:
+                puntaje = puntaje + goles * peso
+            # goles 3 (empata y dijo que pierde o gana)
+            elif item1[0] == item2[0] and item1[1] == item1[2] and item2[1] != item2[2] and item1[1] == item2[1] and item1[2] != item2[2]:
+                puntaje = puntaje + goles * peso
+            # goles 4 (empata y dijo que pierde o gana)
+            elif item1[0] == item2[0] and item1[1] == item1[2] and item2[1] != item2[2] and item1[1] != item2[1] and item1[2] == item2[2]:
                 puntaje = puntaje + goles * peso
             else:
                 puntaje = puntaje
